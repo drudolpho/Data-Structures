@@ -1,7 +1,7 @@
-import sys
-sys.path.append('../queue_and_stack')
-from dll_queue import Queue
-from dll_stack import Stack
+# import sys
+# sys.path.append('../queue_and_stack')
+# from dll_queue import Queue
+# from dll_stack import Stack
 
 
 class BinarySearchTree:
@@ -12,21 +12,63 @@ class BinarySearchTree:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        # self.left and/or self.right need to be valid nodes
+        # for us to call `insert` on them
+        if value < self.value:
+            # check if self.left is a valid node
+            if self.left:
+                self.left.insert(value)
+            # the left side is empty
+            else:
+                # we've found a valid parking spot
+                self.left = BinarySearchTree(value)
+        # otherwise, value >= self.value
+        else:
+            if self.right:
+                self.right.insert(value)
+            else:
+                self.right = BinarySearchTree(value)
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        if target < self.value:
+            if self.left:
+                print("1")
+                self.left.contains(target)
+            else:
+                print("2")
+                return False
+        elif target > self.value:
+            if self.right:
+                print("3")
+                self.right.contains(target)
+            else:
+                print("4")
+                return False
+        elif target == self.value:
+            print("5")
+            return True
+            print("7")
+        else:
+            print("6")
+            return False
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        while self.right is not None:
+            return self.right.get_max()
+        return self.value
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        pass
+        cb(self.value)
+
+        if self.right:
+            self.right.for_each(cb)
+        if self.left:
+            self.left.for_each(cb)
 
     # DAY 2 Project -----------------------
 
